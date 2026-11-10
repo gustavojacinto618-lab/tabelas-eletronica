@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10141b">
+  <meta name="description" content="Referência offline de resistores, capacitores e transistores para eletrônica.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>Eletrônica de Bolso</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark" aria-hidden="true">Ω</div>
+    <div><p class="eyebrow">CONSULTA RÁPIDA</p><h1>Eletrônica de Bolso</h1></div>
+    <span class="offline-badge"><span></span> offline</span>
+  </header>
+  <main id="app" class="main-content">
+    <nav class="tab-nav" aria-label="Categorias">
+      <button id="tab-resistores" class="tab-button active" data-tab="resistores" aria-selected="true"><span>Ω</span>Resistores</button>
+      <button id="tab-capacitores" class="tab-button" data-tab="capacitores" aria-selected="false"><span>▥</span>Capacitores</button>
+      <button id="tab-transistores" class="tab-button" data-tab="transistores" aria-selected="false"><span>⌁</span>Transistores</button>
+    </nav>
+    <section id="resistores" class="tab-panel active" aria-labelledby="tab-resistores">
+      <div class="section-heading"><div><p class="eyebrow">CÓDIGO DE CORES</p><h2>Resistores</h2></div><span class="section-icon">Ω</span></div>
+      <article class="card">
+        <div class="card-heading"><div><h3>Decodificar cores</h3><p>Selecione a quantidade de faixas e suas cores.</p></div></div>
+        <label class="field-label" for="band-count">Faixas</label>
+        <div class="segmented" id="band-count" role="group" aria-label="Quantidade de faixas">
+          <button type="button" data-bands="4" class="selected">4 faixas</button><button type="button" data-bands="5">5 faixas</button><button type="button" data-bands="6">6 faixas</button>
+        </div>
+        <div id="band-selectors" class="band-selectors"></div>
+        <div class="result-box" aria-live="polite"><span class="result-label">VALOR DO RESISTOR</span><strong id="resistor-result">—</strong><p id="resistor-detail">Escolha as cores das faixas.</p></div>
+      </article>
+      <article class="card">
+        <div class="card-heading"><div><h3>Encontrar as cores</h3><p>Digite um valor para ver um código aproximado.</p></div></div>
+        <div class="inline-fields"><label class="grow"><span class="field-label">Resistência (Ω)</span><input id="reverse-value" type="number" min="0.01" step="any" value="4700" inputmode="decimal"></label><label><span class="field-label">Tolerância</span><select id="reverse-tolerance"><option value="5">±5%</option><option value="1">±1%</option><option value="2">±2%</option><option value="0.5">±0,5%</option><option value="10">±10%</option></select></label></div>
+        <div class="reverse-result"><div id="reverse-bands" class="visual-bands" aria-label="Faixas calculadas"></div><p id="reverse-label">—</p></div>
+      </article>
+      <article class="card series-card">
+        <div class="card-heading"><div><h3>Séries normalizadas</h3><p>Valores por década · tolerância típica.</p></div></div>
+        <div class="series-tabs"><button class="selected" data-series="E12">E12 <small>±10%</small></button><button data-series="E24">E24 <small>±5%</small></button><button data-series="E96">E96 <small>±1%</small></button></div>
+        <div id="series-grid" class="series-grid"></div>
+      </article>
+    </section>
+    <section id="capacitores" class="tab-panel" hidden>
+      <div class="section-heading"><div><p class="eyebrow">CÓDIGOS E UNIDADES</p><h2>Capacitores</h2></div><span class="section-icon">▥</span></div>
+      <article class="card"><div class="card-heading"><div><h3>Decodificar código</h3><p>Código de 3 dígitos com tolerância opcional.</p></div></div>
+        <div class="inline-fields"><label class="grow"><span class="field-label">Código</span><input id="capacitor-code" type="text" maxlength="4" value="104" placeholder="Ex.: 104"></label><label><span class="field-label">Letra</span><select id="capacitor-tolerance"><option value="">—</option><option value="F">F · ±1%</option><option value="G">G · ±2%</option><option value="J">J · ±5%</option><option value="K">K · ±10%</option><option value="M">M · ±20%</option><option value="Z">Z · +80/−20%</option></select></label></div>
+        <div class="result-box" aria-live="polite"><span class="result-label">CAPACITÂNCIA</span><strong id="capacitor-result">100 nF</strong><p id="capacitor-detail">104 = 100.000 pF</p></div>
+      </article>
+      <article class="card"><div class="card-heading"><div><h3>Conversor de unidades</h3><p>Converte automaticamente entre pF, nF e µF.</p></div></div>
+        <label class="field-label" for="cap-value">Valor</label><div class="inline-fields converter"><input id="cap-value" type="number" value="100" min="0" step="any" inputmode="decimal"><select id="cap-unit" aria-label="Unidade"><option value="pF">pF</option><option value="nF" selected>nF</option><option value="µF">µF</option></select></div><div id="converter-results" class="conversion-grid"></div>
+      </article>
+      <article class="card"><div class="card-heading"><div><h3>Tipos de capacitores</h3><p>Características gerais para consulta.</p></div></div><div id="capacitor-types" class="type-list"></div></article>
+    </section>
+    <section id="transistores" class="tab-panel" hidden>
+      <div class="section-heading"><div><p class="eyebrow">GUIA DE COMPONENTES</p><h2>Transistores</h2></div><span class="section-icon">⌁</span></div>
+      <article class="card transistor-tools"><label class="search-box"><span aria-hidden="true">⌕</span><input id="transistor-search" type="search" placeholder="Buscar peça ou encapsulamento…" autocomplete="off"><button id="clear-search" aria-label="Limpar busca" type="button">×</button></label>
+        <div class="filter-row" role="group" aria-label="Filtrar tipo"><button class="filter-chip selected" data-filter="todos">Todos</button><button class="filter-chip" data-filter="NPN">NPN</button><button class="filter-chip" data-filter="PNP">PNP</button><button class="filter-chip" data-filter="MOSFET">MOSFET</button></div>
+      </article>
+      <p id="transistor-count" class="list-count" aria-live="polite"></p>
+      <div id="transistor-list" class="transistor-list"></div>
+      <p class="data-note">Valores máximos ou faixas representativas de folhas de dados de fabricantes. O sufixo, fabricante, encapsulamento e condições de teste podem alterar os limites. Confira sempre o datasheet exato antes de projetar ou substituir uma peça. Pinagem vista conforme orientação indicada em cada ficha.</p>
+    </section>
+  </main>
+  <footer class="app-footer">Feito para consulta rápida · Funciona sem conexão</footer>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
